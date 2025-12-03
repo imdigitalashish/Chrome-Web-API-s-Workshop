@@ -6,8 +6,15 @@
     <title>Millennial -> Gen Z Translator</title>
     <style>
         :root {
-            color-scheme: light dark;
+            color-scheme: light;
             font-family: "Space Grotesk", "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            --sand: #fff6ec;
+            --lavender: #f0f4ff;
+            --ink: #18212f;
+            --muted: #6a7485;
+            --accent: #5b7cfa;
+            --accent-soft: #e7ecff;
+            --border: #e0e6f2;
         }
 
         * {
@@ -17,177 +24,253 @@
         body {
             margin: 0;
             min-height: 100vh;
-            background: radial-gradient(circle at top, #1f2937 0%, #0f172a 45%, #020617 100%);
-            color: #e2e8f0;
+            background: radial-gradient(circle at top, var(--lavender), #fdfdfd 40%, var(--sand));
+            color: var(--ink);
             display: flex;
             justify-content: center;
-            padding: 2rem 1rem 3rem;
+            padding: 3rem 1rem 4rem;
         }
 
         main {
-            width: min(960px, 100%);
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            border-radius: 1.5rem;
-            padding: 2rem clamp(1rem, 4vw, 3rem);
-            box-shadow: 0 20px 60px rgba(2, 6, 23, 0.45);
-            backdrop-filter: blur(14px);
+            width: min(1040px, 100%);
+            background: #ffffffee;
+            border-radius: 28px;
+            padding: clamp(1.5rem, 3vw, 3rem);
+            box-shadow: 0 25px 70px rgba(24, 33, 47, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+        }
+
+        .eyebrow {
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            letter-spacing: 0.3em;
+            color: var(--muted);
+        }
+
+        header.hero {
+            display: grid;
+            gap: 0.8rem;
+            margin-bottom: 2.5rem;
         }
 
         h1 {
             margin: 0;
-            font-size: clamp(1.9rem, 4vw, 2.8rem);
-            line-height: 1.15;
+            font-size: clamp(2rem, 4vw, 3rem);
+            letter-spacing: -0.02em;
         }
 
         p.lede {
-            margin: 0.8rem 0 2rem;
-            color: #cbd5f5;
+            margin: 0;
+            color: var(--muted);
+            font-size: 1.05rem;
         }
 
-        .grid {
+        section.survey {
             display: grid;
-            gap: 1.5rem;
+            gap: 1.25rem;
+            border-radius: 24px;
+            padding: 1.75rem;
+            background: linear-gradient(180deg, rgba(247, 250, 255, 0.9), rgba(255, 255, 255, 0.85));
+            border: 1px solid var(--border);
         }
 
         label {
             font-weight: 600;
-            margin-bottom: 0.35rem;
-            display: inline-flex;
+            color: var(--ink);
+            margin-bottom: 0.4rem;
+            display: flex;
             align-items: center;
-            gap: 0.35rem;
+            gap: 0.4rem;
         }
 
         textarea,
-        select,
-        input {
+        select {
             width: 100%;
-            border-radius: 0.8rem;
-            border: 1px solid rgba(148, 163, 184, 0.35);
-            background: rgba(15, 23, 42, 0.85);
-            color: inherit;
-            padding: 0.85rem 1rem;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            padding: 0.95rem 1.1rem;
             font-size: 1rem;
             font-family: inherit;
+            background: #ffffff;
+            color: var(--ink);
             resize: vertical;
+            min-height: 3rem;
         }
 
         textarea[readonly] {
-            min-height: 140px;
-            background: rgba(15, 23, 42, 0.6);
+            min-height: 7rem;
+            background: var(--accent-soft);
+        }
+
+        .stepper {
+            margin-top: 2.5rem;
+            display: grid;
+            gap: 1.5rem;
+            counter-reset: flow;
+        }
+
+        .step-card {
+            position: relative;
+            border-radius: 24px;
+            padding: 1.75rem;
+            border: 1px solid var(--border);
+            background: #fff;
+            box-shadow: 0 10px 40px rgba(24, 33, 47, 0.05);
+        }
+
+        .step-card::before {
+            counter-increment: flow;
+            content: counter(flow);
+            position: absolute;
+            left: 1.5rem;
+            top: 1.5rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+        .step-header {
+            margin-left: 3.4rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .step-header p {
+            margin: 0.35rem 0 0;
+            color: var(--muted);
+        }
+
+        .status {
+            font-size: 0.85rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--muted);
+        }
+
+        .status.idle {
+            color: var(--muted);
+        }
+
+        .status.working {
+            border-color: rgba(91, 124, 250, 0.5);
+            color: var(--accent);
+            background: rgba(91, 124, 250, 0.08);
+        }
+
+        .status.done {
+            border-color: rgba(85, 197, 122, 0.5);
+            color: #34a853;
+            background: rgba(217, 248, 229, 0.8);
+        }
+
+        .status.error {
+            border-color: rgba(255, 138, 128, 0.6);
+            color: #d93025;
+            background: rgba(255, 241, 240, 0.9);
+        }
+
+        .step-body {
+            margin-left: 3.4rem;
+            margin-top: 1rem;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
         }
 
         button {
             border: none;
             border-radius: 999px;
             padding: 0.75rem 1.6rem;
-            font-size: 0.98rem;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s;
-            background: linear-gradient(120deg, #f7b500, #ff5f6d);
-            color: #0f172a;
-            box-shadow: 0 10px 25px rgba(255, 95, 109, 0.25);
+            transition: transform 0.12s ease, box-shadow 0.12s ease, color 0.12s;
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 12px 25px rgba(91, 124, 250, 0.25);
+        }
+
+        button.secondary {
+            background: #fff;
+            color: var(--ink);
+            border: 1px solid var(--border);
+            box-shadow: none;
         }
 
         button:disabled {
             opacity: 0.45;
             cursor: not-allowed;
             box-shadow: none;
-            transform: none;
         }
 
         button:not(:disabled):active {
             transform: scale(0.97);
         }
 
-        button.secondary {
-            background: rgba(148, 163, 184, 0.18);
-            color: inherit;
-            box-shadow: none;
-            border: 1px solid rgba(148, 163, 184, 0.4);
-        }
-
-        .step-card {
-            border: 1px solid rgba(148, 163, 184, 0.25);
-            border-radius: 1.25rem;
-            padding: 1.5rem;
-            background: rgba(15, 23, 42, 0.65);
-            display: grid;
-            gap: 0.9rem;
-        }
-
-        .step-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .status {
-            font-size: 0.85rem;
-            padding: 0.2rem 0.75rem;
-            border-radius: 999px;
-            border: 1px solid rgba(148, 163, 184, 0.35);
-        }
-
-        .status.idle {
-            color: #cbd5f5;
-        }
-
-        .status.working {
-            background: rgba(59, 130, 246, 0.2);
-            color: #93c5fd;
-            border-color: rgba(59, 130, 246, 0.45);
-        }
-
-        .status.done {
-            background: rgba(34, 197, 94, 0.18);
-            color: #86efac;
-            border-color: rgba(34, 197, 94, 0.4);
-        }
-
-        .status.error {
-            background: rgba(248, 113, 113, 0.18);
-            color: #fecaca;
-            border-color: rgba(248, 113, 113, 0.4);
-        }
-
-        .outputs textarea {
-            min-height: 120px;
-        }
-
         .log {
-            margin-top: 2rem;
-            border-radius: 1rem;
-            border: 1px solid rgba(148, 163, 184, 0.3);
-            background: rgba(2, 6, 23, 0.65);
-            padding: 1rem;
+            margin-top: 2.75rem;
+            border-radius: 22px;
+            border: 1px solid var(--border);
+            background: #fff;
+            padding: 1.5rem;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        .log label {
+            color: var(--muted);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
 
         .log pre {
-            max-height: 220px;
-            overflow-y: auto;
             margin: 0;
-            font-size: 0.9rem;
-            line-height: 1.4;
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 0.92rem;
+            background: var(--accent-soft);
+            border-radius: 18px;
+            padding: 0.9rem 1.1rem;
             white-space: pre-wrap;
         }
 
         @media (max-width: 640px) {
-            .step-header {
-                flex-direction: column;
-                align-items: flex-start;
+            .step-header,
+            .step-body {
+                margin-left: 0;
+            }
+
+            .step-card::before {
+                position: static;
+                margin-bottom: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
     <main>
-        <h1>Millennial -> Gen Z Translator</h1>
-        <p class="lede">Turn any millennial rant into chaotic Gen Z slang while touring the Prompt, Rewriter, and Proofreader APIs.</p>
+        <header class="hero">
+            <p class="eyebrow">Chrome AI Studio</p>
+            <h1>Millennial -> Gen Z Translator</h1>
+            <p class="lede">Queue a millennial rant, send it through the Prompt, Rewriter, and Proofreader APIs, and watch the vibes shift one step at a time.</p>
+        </header>
 
-        <section class="grid" aria-label="Scenario setup">
+        <section class="survey" aria-label="Scenario setup">
             <div>
                 <label for="scenarioInput">Topic or scenario</label>
                 <textarea id="scenarioInput" rows="3" placeholder="e.g. Adulting is hard and my plants keep dying..."></textarea>
@@ -201,58 +284,67 @@
                     <option value="wholesome">Wholesome big-sibling energy</option>
                 </select>
             </div>
-            <div>
-                <label>Pipeline</label>
-                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
-                    <button id="promptBtn" data-working-label="Summoning vibes...">1 - Prompt API: craft millennial POV</button>
-                    <button id="rewriteBtn" data-working-label="Gen Z-ifying..." disabled>2 - Rewriter API: Gen Z glow-up</button>
-                    <button id="proofBtn" data-working-label="Polishing..." disabled>3 - Proofreader API: keep it crisp</button>
-                    <button id="runAllBtn" class="secondary" data-working-label="Running pipeline..." disabled>Do it live (all steps)</button>
-                </div>
+            <div class="controls" style="justify-content: flex-end;">
+                <button id="runAllBtn" class="secondary" data-working-label="Running pipeline..." disabled>Run full pipeline</button>
             </div>
         </section>
 
-        <section class="grid" style="margin-top: 2rem;">
+        <section class="stepper" aria-label="API pipeline">
             <article class="step-card" id="promptCard">
                 <header class="step-header">
                     <div>
                         <strong>Prompt API</strong>
-                        <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">Generate the dramatic millennial monologue.</p>
+                        <p>Generate the millennial POV with dramatic flair.</p>
                     </div>
                     <span id="promptStatus" class="status idle">Idle</span>
                 </header>
-                <textarea id="millennialOutput" placeholder="Millennial output will land here" readonly></textarea>
+                <div class="step-body">
+                    <textarea id="millennialOutput" placeholder="Millennial output will land here" readonly></textarea>
+                    <div class="controls">
+                        <button id="promptBtn" data-working-label="Summoning vibes...">Run Prompt step</button>
+                    </div>
+                </div>
             </article>
 
             <article class="step-card" id="rewriteCard">
                 <header class="step-header">
                     <div>
                         <strong>Rewriter API</strong>
-                        <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">Translate to Gen Z slang with zero chill.</p>
+                        <p>Translate that monologue into Gen Z slang.</p>
                     </div>
                     <span id="rewriteStatus" class="status idle">Idle</span>
                 </header>
-                <textarea id="genzOutput" placeholder="Gen Z chaos coming soon" readonly></textarea>
+                <div class="step-body">
+                    <textarea id="genzOutput" placeholder="Gen Z chaos coming soon" readonly></textarea>
+                    <div class="controls">
+                        <button id="rewriteBtn" data-working-label="Gen Z-ifying..." disabled>Run Rewriter step</button>
+                    </div>
+                </div>
             </article>
 
             <article class="step-card" id="proofCard">
                 <header class="step-header">
                     <div>
                         <strong>Proofreader API</strong>
-                        <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">Polish grammar without killing the vibe.</p>
+                        <p>Clean up grammar without losing the vibe.</p>
                     </div>
                     <span id="proofStatus" class="status idle">Idle</span>
                 </header>
-                <textarea id="finalOutput" placeholder="Final Gen Z-certified script" readonly></textarea>
+                <div class="step-body">
+                    <textarea id="finalOutput" placeholder="Final Gen Z-certified script" readonly></textarea>
+                    <div class="controls">
+                        <button id="proofBtn" data-working-label="Polishing..." disabled>Run Proofreader step</button>
+                    </div>
+                </div>
             </article>
         </section>
 
         <section class="log" aria-live="polite">
-            <label for="eventLog">Backstage log</label>
+            <label for="eventLog">Pipeline log</label>
             <pre id="eventLog">Waiting for your scenario...</pre>
         </section>
     </main>
 
-    <script src="script.js" type="module"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
