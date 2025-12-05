@@ -8,7 +8,7 @@ const cn = (...inputs) => twMerge(clsx(inputs));
 // Constants for the demo
 const MODEL_ID = 'Xenova/llama2.c-stories15M';
 // Note: added credentials: 'omit' to fetch calls to avoid 401s on some networks
-// TODO: First step is to get the files.
+// FODO: First step is to get the files.
 // const FILES_TO_FETCH = [
 //   { 
 //     url: 'https://huggingface.co/Xenova/llama2.c-stories15M/resolve/main/tokenizer.json', 
@@ -81,7 +81,7 @@ export default function App() {
     }
   };
 
-  // TODO: Step two downloading the models
+  // FODO: Step two downloading the models
   // const downloadModel = async () => {
   //   setDownloading(true);
   //   addLog('Starting secure download to OPFS...');

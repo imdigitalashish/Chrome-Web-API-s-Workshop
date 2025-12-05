@@ -4,7 +4,7 @@ import { pipeline, env } from '@xenova/transformers';
 // Use defaults for caching to ensure performance after initial load
 // We will demonstrate OPFS storage explicitly in the main thread
 
-// TODO: Step 4 Creating the robust inference.
+// FODO: Step 4 Creating the robust inference.
 // class ModelWorker {
 //   static instance = null;
 
