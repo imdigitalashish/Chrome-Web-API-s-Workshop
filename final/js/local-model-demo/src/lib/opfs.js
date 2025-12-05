@@ -1,8 +1,11 @@
 
 export const OPFS_ROOT = 'local-models';
 
+
+
 export async function getOPFSHandler() {
-  const root = await navigator.storage.getDirectory();
+  // TODO: Step 3: Saving the storage, Getting the storage
+  // const root = await navigator.storage.getDirectory();
   const modelDir = await root.getDirectoryHandle(OPFS_ROOT, { create: true });
   return modelDir;
 }

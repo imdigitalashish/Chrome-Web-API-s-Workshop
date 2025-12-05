@@ -8,23 +8,24 @@ const cn = (...inputs) => twMerge(clsx(inputs));
 // Constants for the demo
 const MODEL_ID = 'Xenova/llama2.c-stories15M';
 // Note: added credentials: 'omit' to fetch calls to avoid 401s on some networks
-const FILES_TO_FETCH = [
-  { 
-    url: 'https://huggingface.co/Xenova/llama2.c-stories15M/resolve/main/tokenizer.json', 
-    name: 'tokenizer.json',
-    size: 1845000
-  },
-  { 
-    url: 'https://huggingface.co/Xenova/llama2.c-stories15M/resolve/main/tokenizer_config.json', 
-    name: 'tokenizer_config.json',
-    size: 5000 
-  },
-  { 
-    url: 'https://huggingface.co/Xenova/llama2.c-stories15M/resolve/main/onnx/decoder_model_merged_quantized.onnx', 
-    name: 'model_quantized.onnx',
-    size: 45000000 
-  }
-];
+// TODO: First step is to get the files.
+// const FILES_TO_FETCH = [
+//   { 
+//     url: 'https://huggingface.co/Xenova/llama2.c-stories15M/resolve/main/tokenizer.json', 
+//     name: 'tokenizer.json',
+//     size: 1845000
+//   },
+//   { 
+//     url: 'https://huggingface.co/Xenova/llama2.c-stories15M/resolve/main/tokenizer_config.json', 
+//     name: 'tokenizer_config.json',
+//     size: 5000 
+//   },
+//   { 
+//     url: 'https://huggingface.co/Xenova/llama2.c-stories15M/resolve/main/onnx/decoder_model_merged_quantized.onnx', 
+//     name: 'model_quantized.onnx',
+//     size: 45000000 
+//   }
+// ];
 
 export default function App() {
   const [ready, setReady] = useState(false);
@@ -80,48 +81,49 @@ export default function App() {
     }
   };
 
-  const downloadModel = async () => {
-    setDownloading(true);
-    addLog('Starting secure download to OPFS...');
+  // TODO: Step two downloading the models
+  // const downloadModel = async () => {
+  //   setDownloading(true);
+  //   addLog('Starting secure download to OPFS...');
     
-    try {
-      for (const file of FILES_TO_FETCH) {
-        addLog(`Fetching ${file.name}...`);
+  //   try {
+  //     for (const file of FILES_TO_FETCH) {
+  //       addLog(`Fetching ${file.name}...`);
         
-        // Use robust fetch options to avoid 401s and caching issues
-        const response = await fetch(file.url, { 
-          method: 'GET',
-          mode: 'cors',
-          credentials: 'omit',
-          referrerPolicy: 'no-referrer',
-          cache: 'no-store'
-        });
-        if (!response.ok) throw new Error(`Failed to fetch ${file.name}: ${response.status} ${response.statusText}`);
+  //       // Use robust fetch options to avoid 401s and caching issues
+  //       const response = await fetch(file.url, { 
+  //         method: 'GET',
+  //         mode: 'cors',
+  //         credentials: 'omit',
+  //         referrerPolicy: 'no-referrer',
+  //         cache: 'no-store'
+  //       });
+  //       if (!response.ok) throw new Error(`Failed to fetch ${file.name}: ${response.status} ${response.statusText}`);
         
-        const total = parseInt(response.headers.get('content-length') || file.size);
-        const stream = response.body;
+  //       const total = parseInt(response.headers.get('content-length') || file.size);
+  //       const stream = response.body;
         
-        if (!stream) throw new Error('No stream support');
+  //       if (!stream) throw new Error('No stream support');
 
-        await saveToOPFS(file.name, stream, (bytesWritten) => {
-          const pct = Math.round((bytesWritten / total) * 100);
-          setProgress(prev => ({ ...prev, [file.name]: pct }));
-        });
+  //       await saveToOPFS(file.name, stream, (bytesWritten) => {
+  //         const pct = Math.round((bytesWritten / total) * 100);
+  //         setProgress(prev => ({ ...prev, [file.name]: pct }));
+  //       });
         
-        addLog(`Saved ${file.name} to OPFS`);
-      }
+  //       addLog(`Saved ${file.name} to OPFS`);
+  //     }
       
-      addLog('All files downloaded successfully.');
-      setReady(true);
-      worker.current.postMessage({ type: 'preload' });
+  //     addLog('All files downloaded successfully.');
+  //     setReady(true);
+  //     worker.current.postMessage({ type: 'preload' });
       
-    } catch (err) {
-      addLog(`Download failed: ${err.message}`);
-      console.error(err);
-    } finally {
-      setDownloading(false);
-    }
-  };
+  //   } catch (err) {
+  //     addLog(`Download failed: ${err.message}`);
+  //     console.error(err);
+  //   } finally {
+  //     setDownloading(false);
+  //   }
+  // };
 
   const clearOPFS = async () => {
     for (const file of FILES_TO_FETCH) {
